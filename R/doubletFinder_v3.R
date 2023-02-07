@@ -1,5 +1,5 @@
 doubletFinder_v3 <- function(object, PCs, pN = 0.25, pK, nExp, reuse.pANN = FALSE, sct = FALSE, idents=NULL,
-                             batch.size=Inf, get.neighbor.doublets=T) {
+                             batch.size=Inf, get.neighbor.doublets=T, sct.conserve.memory=F) {
   require(Seurat); require(fields); require(KernSmooth)
 
   ## Generate new list of doublet classificatons from existing pANN vector to save time
@@ -105,7 +105,7 @@ doubletFinder_v3 <- function(object, PCs, pN = 0.25, pK, nExp, reuse.pANN = FALS
     require(sctransform)
 
     print("Running SCTransform...")
-    seu_wdoublets <- SCTransform(seu_wdoublets)
+    seu_wdoublets <- SCTransform(seu_wdoublets, conserve.memory=sct.conserve.memory)
 
     print("Running PCA...")
     seu_wdoublets <- RunPCA(seu_wdoublets, npcs = length(PCs))
